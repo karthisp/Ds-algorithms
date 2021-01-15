@@ -44,8 +44,42 @@ class Graph {
     getVertex(vertex) {
         if (this.adjList[vertex]) {
             return this.adjList[vertex]
-        } else{
+        } else {
             return 'Vertex not present'
         }
+    }
+    graphBFS(startFrom) {
+        let vertexQueue = [startFrom];
+        let beenToVertices = []
+        let visitedVertices = {};
+        visitedVertices[startFrom] = true;
+        while (vertexQueue.length) {
+            let vertex = vertexQueue.shift();
+            beenToVertices.push(vertex)
+            this.adjList[vertex].forEach(neighbourVertices => {
+                if (!visitedVertices[neighbourVertices]) {
+                    visitedVertices[neighbourVertices] = true;
+                    vertexQueue.push(neighbourVertices)
+                }
+            })
+        }
+        return beenToVertices
+    }
+    graphDFS(startFrom) {
+        let vertexStack = [startFrom];
+        let beenToVertices = [];
+        let visitedVertices = {};
+        visitedVertices[startFrom] = true;
+        while (vertexStack.length) {
+            let vertex = vertexStack.pop();
+            beenToVertices.push(vertex)
+            this.adjList[vertex].forEach(neighbourVertices => {
+                if (!visitedVertices[neighbourVertices]) {
+                    visitedVertices[neighbourVertices] = true;
+                    vertexStack.push(neighbourVertices)
+                }
+            })
+        }
+        return beenToVertices
     }
 }
