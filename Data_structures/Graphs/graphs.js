@@ -83,3 +83,5 @@ class Graph {
         return beenToVertices
     }
 }
+
+module.exports = Graph;
