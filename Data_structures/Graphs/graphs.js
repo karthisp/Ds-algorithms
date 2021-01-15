@@ -49,15 +49,3 @@ class Graph {
         }
     }
 }
-
-let grp = new Graph();
-grp.addVertex('karthik');
-grp.addVertex('prasad')
-grp.addVertex('padmaja');
-grp.addVertex('saroja');
-grp.addEdges('padmaja', 'karthik')
-grp.addEdges('padmaja', 'prasad');
-grp.addEdges('padmaja', 'saroja');
-grp.removeEdge('padmaja', 'karthik');
-grp.removeVertex('saroja')
-console.log(grp.getVertex('padmaja'))
