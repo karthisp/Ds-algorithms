@@ -1,28 +1,5 @@
 const Graph = require('./graphs');
 
-let g1 = new Graph();
-let family = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-
-for(let i=0; i<family.length; i++){
-    g1.addVertex(family[i]);
-}
-
-g1.addEdges(0, 1)
-g1.addEdges(1, 3)
-g1.addEdges(2, 4)
-g1.addEdges(5, 1)
-g1.addEdges(0, 2)
-g1.addEdges(5, 4)
-g1.addEdges(4, 3)
-g1.addEdges(4, 3)
-g1.addEdges(3, 9)
-g1.addEdges(9, 6)
-g1.addEdges(6, 4)
-g1.addEdges(2, 8)
-g1.addEdges(9, 7)
-g1.addEdges(6, 7)
-g1.addEdges(9, 9)
-
 function shortestPathBFS(graph, source, destination){
     let enqueue = [source];
     let predecessor = {};
@@ -55,5 +32,3 @@ function shortestPathBFS(graph, source, destination){
     }
     return path;
 }
-
-console.log(shortestPathBFS(g1, 1, 3))
