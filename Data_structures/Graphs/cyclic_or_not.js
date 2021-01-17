@@ -1,4 +1,5 @@
-const Graph = require('./graphs')
+const Graph = require('./graphs_undirected');
+const DirectedGraph = require('./graphs_directed');
 
 function checkCyclic(start, graphList) {
     let verticesToVisit = [start]

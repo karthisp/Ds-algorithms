@@ -1,4 +1,4 @@
-const Graph = require('./graphs');
+const Graph = require('./graphs_undirected');
 
 function shortestPathBFS(graph, source, destination){
     let enqueue = [source];

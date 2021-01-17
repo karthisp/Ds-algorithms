@@ -1,4 +1,4 @@
-const Graph = require('./graphs');
+const Graph = require('./graphs_undirected');
 const PriorityQueue = require('./priority_queue')
 
 function shortestPath(graph, startPt, endPt) {
