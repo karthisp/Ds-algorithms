@@ -13,10 +13,10 @@ class Graph {
         }
         return this.adjLis;
     }
-    addEdges(vertex1, vertex2) {
+    addEdges(vertex1, vertex2, weight) {
         if (this.adjList[vertex1] && this.adjList[vertex2]) {
-            this.adjList[vertex1].push(vertex2)
-            this.adjList[vertex2].push(vertex1)
+            this.adjList[vertex1].push({node:vertex2, weight:weight})
+            this.adjList[vertex2].push({node:vertex1, weight:weight})
         }
         return this.adjList
     }
