@@ -1,22 +1,25 @@
 const Graph = require('./graphs_undirected');
 const DirectedGraph = require('./graphs_directed');
 
-function checkCyclic(start, graphList) {
-    let verticesToVisit = [start]
-    let visitedVertices = {};
+function checkCyclicBFS(startFrom, graph) {
+    let visited = {};
+    let previous = {};
     let cyclic = false;
-    visitedVertices[start] = true;
-    while (verticesToVisit.length > 0) {
-        let vertex = verticesToVisit.pop();
-        graphList.adjList[vertex].forEach(edges => {
-            if (visitedVertices[edges]) {
-                cyclic = true;
-                return;
-            } else {
-                visitedVertices[edges] = true;
-                verticesToVisit.push(edges)
+    let queue = [startFrom];
+    let graphVertices = graph.adjList;
+    visited[startFrom] = true;
+    while (queue.length) {
+        let currentVertex = queue.shift();
+        graphVertices[currentVertex].forEach(neigh => {
+            if (previous[neigh] || currentVertex === neigh) {
+                cyclic = true
             }
-        })
+            if (!visited[neigh]) {
+                visited[neigh] = true;
+                queue.push(neigh);
+            }
+        });
+        previous[currentVertex] = true;
     }
-    return cyclic
+    return cyclic;
 }
