@@ -1,46 +1,46 @@
 const Graph = require('./graphs_undirected');
 const PriorityQueue = require('./priority_queue')
 
-function shortestPath(graph, startPt, endPt) {
-    let verticesQueue = new PriorityQueue();
-    let distances = {}
-    let previousVertices = {};
-    let path = [];
-    let smallestVertex;
+function shortestPathDijkstras(graph, source, destination) {
+    let distances = {};
+    let paths = {};
+    let visited = {};
+    let result = [destination]
+    visited[source] = true;
+    let graphList = graph.adjList;
+    let vertexQueue = new PriorityQueue();
+    vertexQueue.enqueue(source, 0);
 
-    // Add all vertices to the list
-    for (let vertex in graph.adjList) {
-        if (vertex === startPt) {
+    for (let vertex in graphList) {
+        if (vertex == source) {
             distances[vertex] = 0;
-            verticesQueue.enqueue(vertex, 0)
         } else {
             distances[vertex] = Infinity;
-            verticesQueue.enqueue(vertex, Infinity);
         }
-        previousVertices[vertex] = null;
+        paths[vertex] = null;
     }
-    while (verticesQueue.values.length) {
-        smallestVertex = verticesQueue.dequeue().val;
-        if(smallestVertex === endPt){
-            while(previousVertices[smallestVertex]){
-                path.push(smallestVertex);
-                smallestVertex = previousVertices[smallestVertex];
-            }
-            break;
-        } 
 
-        if(smallestVertex || distances[smallestVertex] !== Infinity){
-            for(let neighbor in graph.adjList[smallestVertex]){
-                let nextNode = graph.adjList[smallestVertex][neighbor];
-                let candidate = distances[smallestVertex] + nextNode.weight;
-                let nextNeighbor = nextNode.node;
-                if(candidate < distances[nextNeighbor]){
-                    distances[nextNeighbor] = candidate;
-                    previousVertices[nextNeighbor] = smallestVertex;
-                    verticesQueue.enqueue(nextNeighbor, candidate);
-                }
+    while(vertexQueue.values.length){
+        let vertex = vertexQueue.dequeue();
+        graphList[vertex.val].forEach(neigh => {
+            if(!visited[neigh.node]){
+                visited[neigh.node] = true;
+                vertexQueue.enqueue(neigh.node, vertex.priority + neigh.weight);
             }
-        }    
+            let wtFromPrtToChi = vertex.priority + neigh.weight;
+            if(wtFromPrtToChi < distances[neigh.node]){
+                distances[neigh.node] = wtFromPrtToChi
+                paths[neigh.node] = vertex.val
+            }
+        })
     }
-    return path.concat(smallestVertex).reverse();
+
+    let backTrackFrom = destination;
+    let totalDistance = distances[destination];
+    while (paths[backTrackFrom] !== null) {
+        result.unshift(paths[backTrackFrom]);
+        backTrackFrom = paths[backTrackFrom];
+    }
+
+    return distances
 }
